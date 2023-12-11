@@ -1,0 +1,18 @@
+Package: SA23204181
+Type: Package
+Title: SA23204181 final Project
+Version: 1.0
+Date: 2023-12-10
+Author: Feihong Yu
+Maintainer: Feihong Yu <yufeihon@email.com>
+Description: Statistical analysis of Hierarchical Poisson Log-linear model for Premier League match data.
+License: GPL (>= 2)
+Imports: Rcpp (>= 1.0.11), Matrix, VGAM, foreach, parallel, sp, INLA, microbenchmark, DAAG, boot, bootstrap, MASS, CDFt
+LinkingTo: Rcpp
+RoxygenNote: 7.2.3
+Encoding: UTF-8
+URL: http://github.com/FeihonYu/SA23204181
+BugReports: http://github.com/FeihonYu/SA23204181/issues
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+Depends: R (>= 3.5.0)

@@ -1,0 +1,37 @@
+---
+title: "Introduction to R-package"
+author: "Feihong Yu"
+date: "2023-12-10"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to R-package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+## Statistical analysis of Premier League
+The English Premier League consists of $T=20$ teams, and each team plays a total of 380 matches in a season, facing every other team once in both home and away fixtures. These matches are distributed across 38 rounds, with each round requiring every team to play one match. At the end of each season, the bottom three teams in terms of points are relegated, and three teams from the lower-tier league replace them. Considering the significant impact of transfers on teams, we focus on predicting outcomes for a single season.
+
+Let $y_{g1}$ and $y_{g2}$ represent the number of goals scored by the home and away teams, respectively, in the $i$-th match of the season $(g = 1, \ldots, G)$. We assume that the observed goal counts $y_{g1}$ and $y_{g2}$ follow a Poisson distribution with parameters $\theta_{gj}$, representing the goal-scoring intensity for the home ($j=1$) and away ($j=2$) teams in the $g$-th match. To facilitate analysis, we transform $\theta_{gj}$ by setting $\eta_{gj} = \log(\theta_{gj})$. The transformation parameter $\eta_{gj}$ is modeled using a linear regression structure, specifically a log-linear model similar to the principles of logistic regression, which has been widely accepted in the academic community.
+
+The log-linear model is expressed as follows:
+$$
+\begin{align*}
+    \eta_{g 1} &= \log(\theta_{g 1}) = \sum_{k=1}^p \beta_k z_{g 1 k} + \text{att}_{h_g} + \text{def}_{a_g} + \text{home}, \\
+    \eta_{g 2} &= \log(\theta_{g 2}) = \sum_{k=1}^p \beta_k z_{g 2 k} + \text{att}_{a_g} + \text{def}_{h_g}.
+\end{align*}
+$$
+This formulation represents the log-linear Poisson model, extensively discussed and applied in the field of statistics.
+The HPL() function fit the model using INLA packages,
+```{r}
+# Use HPL() to fit the 20-21 PL soccer data from url:https://www.football-data.co.uk/
+library(SA23204181)
+data(data)
+attach(data)
+# The data should be processed reserving 
+# "HomeTeam,AwayTeam,FTHG,FTAG,FTR,MaxH,MaxD,MaxA,AvgH,AvgD,AvgA" columns of raw from url.
+# size_train A number of training set.
+# size_valid A number of prediction or validation set.
+PL2021<- HPL(data,size_train,size_valid)
+PL2021
+# return shows prediction criteria: accurary,rps,likelihood-based criteria,profit.
+```
